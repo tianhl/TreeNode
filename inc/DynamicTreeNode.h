@@ -47,10 +47,12 @@ class DynamicObj: public Node{
 			if(name==m_name) return this;
 			else throw std::runtime_error("DynamicObj "+name+" is not created.\n");
 		}
-		//virtual std::string path()
-		DynamicObj(){}
-	//private:
-	//	DynamicObj(){};
+		//virtual std::string path() // ?? need path parent
+		DynamicObj(std::string name, O* obj){
+			this->regist(name, obj);
+		}
+	private:
+		DynamicObj(){};
 	private:
 		O* m_ref;
 		std::string m_name;
@@ -72,7 +74,8 @@ class DynamicTree: public Node{
 			Node* current = (0==name.find("/"))?m_root:this;
 			for(itName=dividedName.begin(); itName!=dividedName.end(); itName++){
 				if(0==(*itName).size()) continue;
-				current = current->Node::find(*itName);
+				if(dynamic_cast<DynamicTree<O>*>(current)) current = current->Node::find(*itName);
+			        else current = current->find(*itName);	
 				// how to throw out error? path
 			}
 			return current;
@@ -88,10 +91,8 @@ class DynamicTree: public Node{
 
 		virtual void registObj(const std::string& name, O* o){
 			if(name.empty()) throw std::runtime_error("make branch error: no name for branch");
-			DynamicObj<O>* obj = new DynamicObj<O>();
-			obj->regist(name, o);
+			DynamicObj<O>* obj = new DynamicObj<O>(name, o);
 			this->regist(name, obj);
-			std::cout << "registObj Obj " << obj << " data " << o << std::endl;
 		}
 
 		std::string     path(){return m_path;}
