@@ -1,5 +1,5 @@
 INCLUDE_FLAGS =  -I/usr/include/python2.7
-INCLUDE_FLAGS += -I/usr/include/Poco
+#INCLUDE_FLAGS += -I/usr/include/Poco
 INCLUDE_FLAGS += -I/opt/nexus/nexus-4.3.1/Build/include
 INCLUDE_FLAGS += -Iinc
 

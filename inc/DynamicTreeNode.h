@@ -31,9 +31,11 @@ class Node{
 };
 
 
+template<class O> class DynamicTree;
+
 template<class O>
 class DynamicObj: public Node{
-	//friend class DynamicTree<O>;
+	friend class DynamicTree<O>;
 
 	public: O* get(){ 
 			if(m_ref) return m_ref; 
@@ -48,10 +50,10 @@ class DynamicObj: public Node{
 			else throw std::runtime_error("DynamicObj "+name+" is not created.\n");
 		}
 		//virtual std::string path() // ?? need path parent
+	private:
 		DynamicObj(std::string name, O* obj){
 			this->regist(name, obj);
 		}
-	private:
 		DynamicObj(){};
 	private:
 		O* m_ref;
